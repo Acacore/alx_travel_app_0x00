@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config 
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -79,21 +80,32 @@ WSGI_APPLICATION = "alx_travel_app.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+# mysql_db
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': config('DB_ENGINE'),
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': 'localhost',  # or your database host
+        'PORT': config('DB_PORT'),  # or your database port
+    },
+     'sqlite3': {
+        "ENGINE": 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    },
+
+    'supabase_db': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'Jw8lc2oGcBiSiNNl',
+        'HOST': 'db.dpmqfhwodobmurtpwrpc.supabase.co',
+        'PORT': '5432'
     }
-    # "default": {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'your_database_name',
-    #     'USER': 'your_database_user',
-    #     'PASSWORD': 'your_database_password',
-    #     'HOST': 'localhost',  # or your database host
-    #     'PORT': '3306',  # or your database port
-    # }
 }
+
 
 
 

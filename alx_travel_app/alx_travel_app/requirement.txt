@@ -4,3 +4,5 @@ django-cors-headers
 drf-yasg
 celery 
 rabbitmq
+mysqlclient
+python-decouple
