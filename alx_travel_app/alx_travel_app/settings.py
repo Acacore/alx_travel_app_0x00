@@ -83,15 +83,16 @@ WSGI_APPLICATION = "alx_travel_app.wsgi.application"
 # mysql_db
 
 DATABASES = {
-    'default': {
-        'ENGINE': config('DB_ENGINE'),
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': 'localhost',  # or your database host
-        'PORT': config('DB_PORT'),  # or your database port
-    },
-     'sqlite3': {
+    # 'default': {
+    #     'ENGINE': config('DB_ENGINE'),
+    #     'NAME': config('DB_NAME'),
+    #     'USER': config('DB_USER'),
+    #     'PASSWORD': config('DB_PASSWORD'),
+    #     'HOST': 'localhost',  # or your database host
+    #     'PORT': config('DB_PORT'),  # or your database port
+    # },
+
+     'default': {
         "ENGINE": 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     },
@@ -151,6 +152,7 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+AUTH_USER_MODEL = "listings.User"
 
 CORS_ALLOWED_ORIGINS = [
     "https://example.com",
