@@ -18,7 +18,9 @@ class Listing(models.Model):
     name = models.CharField(max_length=128)
     description = models.TextField
     location = models.CharField(max_length=128)
-    price_per_night = models.DecimalField(max_digits=6, decimal_places=2)
+    price_per_night = models.DecimalField(max_digits=10, decimal_places=2)
+    city = models.CharField(max_length=128)
+    country = models.CharField(max_length=128)
     created_at = models.DateTimeField(default=timezone.now)
     updateted_at = models.DateTimeField(default=timezone.now)
 
@@ -34,16 +36,16 @@ class Booking(models.Model):
               ('canceled', 'Canceled')]
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    property = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="lodge")
-    customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="guess")
-    start_date = models.DateTimeField(default=timezone.now)
-    end_date = models.DateField(default=timezone.now)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="lodge")
+    guest = models.ForeignKey(User, on_delete=models.CASCADE, related_name="guess")
+    check_in = models.DateTimeField(default=timezone.now)
+    check_out = models.DateField(default=timezone.now)
     total_price = models.DecimalField(max_digits=6, decimal_places=2)
     status = models.CharField(choices=STATUS, default=STATUS[0][0], max_length=12)
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f'{self.customer.username} books {self.property.name}'
+        return f'{self.guest.username} books {self.listing.name}'
 
 class Review(models.Model):
     review = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

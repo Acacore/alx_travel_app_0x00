@@ -6,3 +6,4 @@ celery
 rabbitmq
 mysqlclient
 python-decouple
+faker
