@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from listings.models import *
 import uuid
-import fake import Faker
+from faker import Faker
 import random
 
 
@@ -15,8 +15,9 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         users = []
         for _ in range(100):
+            username = fake.unique.user_name()
             user = User.objects.create_user(
-                    username = fake.user_name(),
+                    username = username,
                     first_name = fake.first_name(),
                     last_name = fake.last_name(),
                     email = fake.email(),
@@ -27,16 +28,16 @@ class Command(BaseCommand):
         listings = []
         for _ in range(50):
             listing = Listing.objects.create(
-                host = random.choice(users[:50]),
-                name = fake.company(),
+                host = fake.random_element(users[:50]),
+                name = fake.company(), 
                 description = fake.paragraph(),
-                location = fake.address().replace("\n",", ")
+                location = fake.address().replace("\n",", "),
                 city = fake.city(),
                 country = fake.country(),
                 price_per_night = random.randint(250, 1000),
                 created_at = fake.date_time()
             )
-            listings.apped(listing)
+            listings.append(listing)
 
         for _ in range(50):
               start_date = fake.date_time_this_year()

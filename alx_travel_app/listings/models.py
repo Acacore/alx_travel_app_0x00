@@ -10,13 +10,14 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 class User(AbstractUser):
-    pass
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    
   
 class Listing(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     host = models.ForeignKey(User,on_delete=models.CASCADE, related_name='host')
     name = models.CharField(max_length=128)
-    description = models.TextField
+    description = models.TextField()
     location = models.CharField(max_length=128)
     price_per_night = models.DecimalField(max_digits=10, decimal_places=2)
     city = models.CharField(max_length=128)

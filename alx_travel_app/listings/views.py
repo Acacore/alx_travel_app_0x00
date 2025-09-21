@@ -19,6 +19,7 @@ class SignUpViewset(viewsets.ModelViewSet):
 
 class LoginViewset(viewsets.ViewSet):
     permission_classes = [AllowAny]
+    
 
     @action(detail=False, methods=['post'])
     def login(self, request):
@@ -36,7 +37,7 @@ class ReviewViewset(viewsets.ModelViewSet):
     def get_queryset(self):
         # Return onlly the message created by the authenticated user
         user = self.request.user
-        return self.queryset.filter(user_id=user)
+        return self.queryset.filter(user=user)
     
     def perform_create(self, serializer):
         # Automatically set the user field to the authenticated
@@ -51,7 +52,7 @@ class ListingViewset(viewsets.ModelViewSet):
     def get_queryset(self):
         # Return onlly the message created by the authenticated user
         user = self.request.user
-        return self.queryset.filter(user_id=user)
+        return self.queryset.filter(user=user)
     
     def perform_create(self, serializer):
         # Automatically set the user field to the authenticated
@@ -66,7 +67,7 @@ class BookingViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         # Return onlly the message created by the authenticated user
         user = self.request.user
-        return self.queryset.filter(user_id=user)
+        return self.queryset.filter(id=user.id)
     
     def perform_create(self, serializer):
         # Automatically set the user field to the authenticated
@@ -80,7 +81,7 @@ class PaymentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         # Return onlly the message created by the authenticated user
         user = self.request.user
-        return self.queryset.filter(user_id=user)
+        return self.queryset.filter(user=user)
     
     def perform_create(self, serializer):
         # Automatically set the user field to the authenticated
