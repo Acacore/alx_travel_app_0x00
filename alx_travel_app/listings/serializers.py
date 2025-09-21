@@ -58,50 +58,44 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['username', 'email', 'password']
 
 class ReviewSerializer(serializers.ModelSerializer):
-   user_id = UserSerializer(read_only=True)
+   id = serializers.UUIDField(read_only=True)
+   user = UserSerializer(read_only=True)
 
    class Meta:
         model = Review
         fields = '__all__'
 
+
 class ListingSerializer(serializers.ModelSerializer):
-    reviews = ReviewSerializer(many=True, read_only=True)
-    average_rating = serializers.SerializerMethodField()
-    user_id = UserSerializer(read_only=True)
-    
+    id = serializers.UUIDField(read_only=True)
+    host = UserSerializer(read_only=True)
     
     class Meta:
         model = Listing
         fields = '__all__'
 
-    def get_average_rating(self, obj):
-        return obj.reviews.aggregate(avg=Avg("rating"))["avg"] or 0
 
 
-  
-class BookingSerializer(serializers.ModelSerializer):
-    booking_id = serializers.UUIDField(read_only=True)
-    user_id = UserSerializer(read_only=True)
-
-    class Meta:
-        model = Booking
-        fields = '__all__'
 
 
 class PaymentSerializer(serializers.ModelSerializer):
-    payment_id = serializers.UUIDField(read_only=True)
-    user_id = UserSerializer(read_only=True)
+    id = serializers.UUIDField(read_only=True)
+    user = UserSerializer(read_only=True)
     class Meta:
         model = Payment
         fields = '__all__'
 
 
 class BookingSerializer(serializers.ModelSerializer):
-    booking_id = serializers.UUIDField(read_only=True)
-    user_id = UserSerializer(read_only=True)
+    id = serializers.UUIDField(read_only=True)
+    guest = UserSerializer(read_only=True)
+    
+    
     class Meta:
         model = Booking
         fields = '__all__'
+
+  
 
     
 

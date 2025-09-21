@@ -20,7 +20,6 @@ class SignUpViewset(viewsets.ModelViewSet):
 class LoginViewset(viewsets.ViewSet):
     permission_classes = [AllowAny]
     
-
     @action(detail=False, methods=['post'])
     def login(self, request):
         serializers = LoginSerializer(data=request.data, context={"request":request})
@@ -28,6 +27,12 @@ class LoginViewset(viewsets.ViewSet):
         user = serializers.validated_data['user']
         login(request, user)
         return Response({"status":"login in"}, status=status.HTTP_200_OK)
+    
+class HomePageView(viewsets.ViewSet):
+    queryset = Listing.objects.all()
+    serializer_class = ListingSerializer
+    permission_classes = [IsAuthenticated]
+
      
 class ReviewViewset(viewsets.ModelViewSet):
     queryset = Review.objects.all()
@@ -45,7 +50,7 @@ class ReviewViewset(viewsets.ModelViewSet):
 
 
 class ListingViewset(viewsets.ModelViewSet):
-    queryset = Review.objects.all()
+    queryset = Listing.objects.all()
     serializer_class = ListingSerializer
     permission_classes = [IsAuthenticated]
 
@@ -56,7 +61,7 @@ class ListingViewset(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         # Automatically set the user field to the authenticated
-        serializer.save(user=self.request.user)  
+        serializer.save(host=self.request.user)  
  
 
 class BookingViewSet(viewsets.ModelViewSet):
@@ -71,7 +76,7 @@ class BookingViewSet(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         # Automatically set the user field to the authenticated
-        serializer.save(user=self.request.user)
+        serializer.save(guest=self.request.user)
 
 class PaymentViewSet(viewsets.ModelViewSet):
     queryset = Payment.objects.all()

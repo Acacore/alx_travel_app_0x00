@@ -38,18 +38,21 @@ class Booking(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="lodge")
-    guest = models.ForeignKey(User, on_delete=models.CASCADE, related_name="guess")
+    guest = models.ForeignKey(User, on_delete=models.CASCADE, related_name="guest")
     check_in = models.DateTimeField(default=timezone.now)
     check_out = models.DateField(default=timezone.now)
     total_price = models.DecimalField(max_digits=6, decimal_places=2)
     status = models.CharField(choices=STATUS, default=STATUS[0][0], max_length=12)
     created_at = models.DateTimeField(default=timezone.now)
 
+
+    
+
     def __str__(self):
         return f'{self.guest.username} books {self.listing.name}'
 
 class Review(models.Model):
-    review = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     property = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="property")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_review")
     rating = models.IntegerField(default=3, validators=[MinValueValidator(1), MaxValueValidator(5)])
@@ -66,8 +69,8 @@ class Payment(models.Model):
               ('cancel','Canceld'),
               ('failed','Failed')]
     
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_payment")
-    payment = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE, related_name="booking")
     amount = models.DecimalField(max_digits=6, decimal_places=2)
     status = models.CharField(choices=STATUS, default=STATUS[0][0], max_length=16)

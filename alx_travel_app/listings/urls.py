@@ -7,9 +7,10 @@ router = routers.DefaultRouter()
 router.register(r'auth', LoginViewset, basename='auth')
 router.register(r'signup', SignUpViewset, basename='signup')
 router.register(r'review', ReviewViewset, basename='review')
-router.register(r'properties', ListingViewset, basename='listing')
+router.register(r'listing', ListingViewset, basename='listing')
 router.register(r'booking', BookingViewSet, basename='booking')
 router.register(r'payment', PaymentViewSet, basename='payment')
+
 
 
 
